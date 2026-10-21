@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TechVibe Store — Cửa hàng công nghệ chính hãng. Laptop, điện thoại, tai nghe, đồng hồ.">
+  <title>TECHVIBE // STORE — Công nghệ chính hãng</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="top">
+
+<!-- ================================================================
+     STATE INPUTS — CSS-only interactivity
+     ================================================================ -->
+<input type="checkbox" id="menu-toggle" hidden>
+<input type="checkbox" id="search-toggle" hidden>
+<input type="checkbox" id="cart-toggle" hidden>
+
+<input type="radio" name="cat" id="f-all" checked hidden>
+<input type="radio" name="cat" id="f-laptop" hidden>
+<input type="radio" name="cat" id="f-phone" hidden>
+<input type="radio" name="cat" id="f-audio" hidden>
+<input type="radio" name="cat" id="f-watch" hidden>
+
+<input type="radio" name="price" id="p-all" checked hidden>
+<input type="radio" name="price" id="p-low" hidden>
+<input type="radio" name="price" id="p-mid" hidden>
+<input type="radio" name="price" id="p-high" hidden>
+
+<input type="radio" name="sort" id="s-default" checked hidden>
+<input type="radio" name="sort" id="s-asc" hidden>
+<input type="radio" name="sort" id="s-desc" hidden>
+
+<input type="checkbox" id="cart-iphone" class="cart-cb" hidden>
+<input type="checkbox" id="cart-airpods" class="cart-cb" hidden>
+<input type="checkbox" id="cart-watch" class="cart-cb" hidden>
+
+<input type="checkbox" id="wish-iphone" class="wish-cb" hidden>
+<input type="checkbox" id="wish-laptop" class="wish-cb" hidden>
+<input type="checkbox" id="wish-watch" class="wish-cb" hidden>
+
+<input type="checkbox" id="qview-laptop" class="qview-cb" hidden>
+<input type="checkbox" id="qview-macbook" class="qview-cb" hidden>
+<input type="checkbox" id="qview-samsung" class="qview-cb" hidden>
+
+<!-- Decorative background layers -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+<div class="bg-scanlines" aria-hidden="true"></div>
+
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <label for="menu-toggle" class="menu-btn" aria-label="Mở menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <a href="#top" class="brand">
+      <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#00e5ff"/>
+            <stop offset="1" stop-color="#ff006e"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="12" fill="#05060a"/>
+        <rect x="1" y="1" width="62" height="62" rx="11" fill="none" stroke="url(#lg1)" stroke-width="1.5"/>
+        <path d="M20 24h24l-2.5 18h-19L20 24zm4 0V20a8 8 0 0116 0v4" stroke="url(#lg1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="32" cy="34" r="3" fill="#00e5ff"/>
+      </svg>
+      <span class="brand-text">
+        <strong>TECHVIBE</strong>
+        <span>// STORE</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Điều hướng chính">
+      <ul>
+        <li><a href="#products"><span class="nav-idx">01</span> Sản phẩm</a></li>
+        <li><a href="#deals"><span class="nav-idx">02</span> Khuyến mãi</a></li>
+        <li><a href="#why"><span class="nav-idx">03</span> Cam kết</a></li>
+        <li><a href="#faq"><span class="nav-idx">04</span> Hỏi đáp</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <label for="search-toggle" class="icon-btn" aria-label="Tìm kiếm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </label>
+      <label for="cart-toggle" class="icon-btn cart-btn" aria-label="Giỏ hàng">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1.6"/><circle cx="20" cy="21" r="1.6"/>
+          <path d="M1 1h4l2.7 13.4A2 2 0 0 0 9.7 16h8.6a2 2 0 0 0 2-1.6L22 6H6"/>
+        </svg>
+        <span class="cart-badge"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="search-panel">
+    <div class="container search-inner">
+      <span class="search-prefix mono">SEARCH &gt;</span>
+      <input type="text" class="search-input" placeholder="iPhone, Laptop, AirPods...">
+      <label for="search-toggle" class="search-close" aria-label="Đóng">ESC ✕</label>
+      <div class="hot-search">
+        <span class="mono">HOT:</span>
+        <label for="f-phone" class="chip">iPhone</label>
+        <label for="f-laptop" class="chip">Laptop</label>
+        <label for="f-audio" class="chip">Tai nghe</label>
+        <label for="f-watch" class="chip">Đồng hồ</label>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==============================================================
+       HERO
+       ============================================================== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <div class="hero-tag animate__animated animate__fadeInDown">
+          <span class="pulse-dot"></span>
+          <span class="mono">FLASH SALE 06.2026 — GIẢM ĐẾN 40%</span>
+        </div>
+
+        <h1 id="hero-title" class="hero-title animate__animated animate__fadeInUp">
+          <span class="line-1">CÔNG NGHỆ</span>
+          <span class="line-2 gradient-text">TƯƠNG LAI</span>
+          <span class="line-3">GIÁ HÔM NAY</span>
+        </h1>
+
+        <p class="hero-desc animate__animated animate__fadeInUp animate__delay-1s">
+          Hàng ngàn sản phẩm công nghệ chính hãng — laptop, điện thoại, tai nghe,
+          đồng hồ thông minh. Bảo hành 24 tháng. Miễn phí ship. Đổi trả 30 ngày.
+        </p>
+
+        <div class="hero-actions animate__animated animate__fadeInUp animate__delay-2s">
+          <a href="#products" class="btn btn-primary">
+            <span>MUA SẮM NGAY</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#deals" class="btn btn-ghost">
+            <span>XEM ƯU ĐÃI</span>
+          </a>
+        </div>
+
+        <ul class="hero-stats animate__animated animate__fadeInUp animate__delay-2s">
+          <li><strong>50K+</strong><span>Khách hàng</span></li>
+          <li><strong>24T</strong><span>Bảo hành</span></li>
+          <li><strong>2H</strong><span>Giao hàng</span></li>
+          <li><strong>4.9★</strong><span>Đánh giá</span></li>
+        </ul>
+      </div>
+
+      <aside class="hero-right animate__animated animate__fadeInRight animate__delay-1s">
+        <div class="holo-card">
+          <div class="holo-corners">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="holo-label mono">
+            <span>FEATURED</span>
+            <span class="blink">●</span>
+            <span>01/2026</span>
+          </div>
+          <div class="holo-media">
+            <img src="https://images.unsplash.com/photo-1696446701796-da61225697cc?q=80&w=800&auto=format&fit=crop" alt="iPhone 16 Pro Max" class="holo-img">
+            <div class="holo-scan"></div>
+          </div>
+          <div class="holo-info">
+            <p class="mono holo-cat">// SMARTPHONE</p>
+            <h2>iPhone 16 Pro Max</h2>
+            <p class="holo-meta">256GB · Titan tự nhiên</p>
+            <div class="holo-price">
+              <strong>29.990.000<sup>đ</sup></strong>
+              <span class="price-old">34.990.000đ</span>
+            </div>
+            <label for="cart-iphone" class="btn btn-primary btn-block">
+              <span>THÊM VÀO GIỎ</span>
+              <span class="btn-arrow">+</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="hero-marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>MIỄN PHÍ SHIP ★ BẢO HÀNH 24 THÁNG ★ TRẢ GÓP 0% ★ ĐỔI TRẢ 30 NGÀY ★ GIAO 2H NỘI THÀNH ★ 50,000+ KHÁCH HÀNG ★</span>
+        <span>MIỄN PHÍ SHIP ★ BẢO HÀNH 24 THÁNG ★ TRẢ GÓP 0% ★ ĐỔI TRẢ 30 NGÀY ★ GIAO 2H NỘI THÀNH ★ 50,000+ KHÁCH HÀNG ★</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       PRODUCTS
+       ============================================================== -->
+  <section id="products" class="section" aria-labelledby="products-title">
+    <div class="container">
+      <header class="section-header reveal">
+        <div class="section-meta mono">
+          <span>[ 01 ]</span>
+          <span>// PRODUCTS</span>
+        </div>
+        <h2 id="products-title">Sản phẩm <span class="gradient-text">nổi bật</span></h2>
+        <p>Lọc theo danh mục, mức giá và sắp xếp theo nhu cầu của bạn.</p>
+      </header>
+
+      <div class="filter-bar">
+        <div class="filter-row">
+          <span class="filter-label mono">CATEGORY</span>
+          <div class="chips">
+            <label for="f-all" class="chip">Tất cả</label>
+            <label for="f-laptop" class="chip">Laptop</label>
+            <label for="f-phone" class="chip">Phone</label>
+            <label for="f-audio" class="chip">Audio</label>
+            <label for="f-watch" class="chip">Watch</label>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label mono">PRICE</span>
+          <div class="chips">
+            <label for="p-all" class="chip">Tất cả</label>
+            <label for="p-low" class="chip">&lt; 10M</label>
+            <label for="p-mid" class="chip">10M — 25M</label>
+            <label for="p-high" class="chip">&gt; 25M</label>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label mono">SORT</span>
+          <div class="chips">
+            <label for="s-default" class="chip">Mặc định</label>
+            <label for="s-asc" class="chip">Giá ↑</label>
+            <label for="s-desc" class="chip">Giá ↓</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid">
+
+        <article class="product-card reveal" data-cat="phone" data-price="high" style="--sort-asc: 2; --sort-desc: 5; --delay: 0.05s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1696446701796-da61225697cc?q=80&w=600&auto=format&fit=crop" alt="iPhone" class="product-img">
+            <span class="badge badge-hot">-20%</span>
+            <label for="wish-iphone" class="heart" aria-label="Yêu thích">
+              <span class="heart-icon">♥</span>
+            </label>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// PHONE</p>
+            <h3>iPhone 16 Pro Max</h3>
+            <p class="rating"><span>★★★★★</span> <em>(342)</em></p>
+            <div class="product-price">
+              <strong>29.990.000<sup>đ</sup></strong>
+              <span class="price-old">34.990.000đ</span>
+            </div>
+            <label for="cart-iphone" class="btn btn-primary btn-block">
+              <span>+ GIỎ HÀNG</span>
+            </label>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-cat="audio" data-price="low" style="--sort-asc: 1; --sort-desc: 6; --delay: 0.08s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=600&auto=format&fit=crop" alt="AirPods Max" class="product-img">
+            <span class="badge badge-new">NEW</span>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// AUDIO</p>
+            <h3>AirPods Max</h3>
+            <p class="rating"><span>★★★★★</span> <em>(96)</em></p>
+            <div class="product-price">
+              <strong>5.490.000<sup>đ</sup></strong>
+              <span class="price-old">6.990.000đ</span>
+            </div>
+            <label for="cart-airpods" class="btn btn-primary btn-block">
+              <span>+ GIỎ HÀNG</span>
+            </label>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-cat="watch" data-price="mid" style="--sort-asc: 3; --sort-desc: 4; --delay: 0.11s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?q=80&w=600&auto=format&fit=crop" alt="Apple Watch" class="product-img">
+            <span class="badge badge-hot">-10%</span>
+            <label for="wish-watch" class="heart" aria-label="Yêu thích">
+              <span class="heart-icon">♥</span>
+            </label>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// WATCH</p>
+            <h3>Apple Watch Ultra 2</h3>
+            <p class="rating"><span>★★★★★</span> <em>(74)</em></p>
+            <div class="product-price">
+              <strong>18.990.000<sup>đ</sup></strong>
+              <span class="price-old">20.990.000đ</span>
+            </div>
+            <label for="cart-watch" class="btn btn-primary btn-block">
+              <span>+ GIỎ HÀNG</span>
+            </label>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-cat="laptop" data-price="high" style="--sort-asc: 6; --sort-desc: 1; --delay: 0.14s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop" alt="Laptop Pro" class="product-img">
+            <span class="badge badge-hot">-15%</span>
+            <label for="wish-laptop" class="heart" aria-label="Yêu thích">
+              <span class="heart-icon">♥</span>
+            </label>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// LAPTOP</p>
+            <h3>Laptop Pro X1</h3>
+            <p class="rating"><span>★★★★★</span> <em>(128)</em></p>
+            <div class="product-price">
+              <strong>32.990.000<sup>đ</sup></strong>
+              <span class="price-old">38.990.000đ</span>
+            </div>
+            <label for="qview-laptop" class="btn btn-ghost btn-block">
+              <span>XEM NHANH</span>
+            </label>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-cat="laptop" data-price="mid" style="--sort-asc: 5; --sort-desc: 2; --delay: 0.17s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=600&auto=format&fit=crop" alt="MacBook" class="product-img">
+            <span class="badge badge-new">NEW</span>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// LAPTOP</p>
+            <h3>MacBook Air M3</h3>
+            <p class="rating"><span>★★★★★</span> <em>(204)</em></p>
+            <div class="product-price">
+              <strong>24.990.000<sup>đ</sup></strong>
+              <span class="price-old">27.990.000đ</span>
+            </div>
+            <label for="qview-macbook" class="btn btn-ghost btn-block">
+              <span>XEM NHANH</span>
+            </label>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-cat="phone" data-price="mid" style="--sort-asc: 4; --sort-desc: 3; --delay: 0.20s">
+          <div class="product-media">
+            <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=600&auto=format&fit=crop" alt="Samsung" class="product-img">
+            <span class="badge badge-hot">-18%</span>
+            <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="product-info">
+            <p class="mono product-cat">// PHONE</p>
+            <h3>Samsung S24 Ultra</h3>
+            <p class="rating"><span>★★★★★</span> <em>(187)</em></p>
+            <div class="product-price">
+              <strong>22.990.000<sup>đ</sup></strong>
+              <span class="price-old">27.990.000đ</span>
+            </div>
+            <label for="qview-samsung" class="btn btn-ghost btn-block">
+              <span>XEM NHANH</span>
+            </label>
+          </div>
+        </article>
+      </div>
+
+      <div class="products-empty">
+        <p class="mono">[ ERROR 404 ]</p>
+        <h3>Không có sản phẩm phù hợp</h3>
+        <p>Thử đổi bộ lọc khác để xem thêm sản phẩm.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       DEALS
+       ============================================================== -->
+  <section id="deals" class="section deals-section">
+    <div class="container deals-box reveal">
+      <div class="deals-glow" aria-hidden="true"></div>
+      <div class="deals-content">
+        <div class="section-meta mono">
+          <span>[ 02 ]</span>
+          <span>// PROMO</span>
+        </div>
+        <h2>Giảm thêm <span class="gradient-text">10%</span> đơn đầu tiên</h2>
+        <p>Nhập mã khi thanh toán để giảm thêm 10% (tối đa 500.000đ).</p>
+      </div>
+      <div class="deals-code">
+        <span class="mono">PROMO_CODE</span>
+        <strong>TECHVIBE10</strong>
+        <a href="#products" class="btn btn-primary">
+          <span>SỬ DỤNG</span>
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       WHY US
+       ============================================================== -->
+  <section id="why" class="section" aria-labelledby="why-title">
+    <div class="container">
+      <header class="section-header reveal">
+        <div class="section-meta mono">
+          <span>[ 03 ]</span>
+          <span>// COMMITMENT</span>
+        </div>
+        <h2 id="why-title">Cam kết từ <span class="gradient-text">TechVibe</span></h2>
+      </header>
+
+      <div class="why-grid">
+        <article class="why-card reveal" style="--delay: 0.05s">
+          <span class="why-num mono">01</span>
+          <span class="why-icon">🚚</span>
+          <h3>Miễn phí ship</h3>
+          <p>Toàn quốc cho đơn từ 500.000đ.</p>
+        </article>
+        <article class="why-card reveal" style="--delay: 0.10s">
+          <span class="why-num mono">02</span>
+          <span class="why-icon">🛡️</span>
+          <h3>Bảo hành 24T</h3>
+          <p>Chính hãng, 1 đổi 1 trong 30 ngày.</p>
+        </article>
+        <article class="why-card reveal" style="--delay: 0.15s">
+          <span class="why-num mono">03</span>
+          <span class="why-icon">💳</span>
+          <h3>Trả góp 0%</h3>
+          <p>Qua thẻ tín dụng, kỳ hạn 3-12 tháng.</p>
+        </article>
+        <article class="why-card reveal" style="--delay: 0.20s">
+          <span class="why-num mono">04</span>
+          <span class="why-icon">⚡</span>
+          <h3>Giao hàng 2H</h3>
+          <p>Nội thành TP.HCM &amp; Hà Nội.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       FAQ
+       ============================================================== -->
+  <section id="faq" class="section section-alt" aria-labelledby="faq-title">
+    <div class="container">
+      <header class="section-header reveal">
+        <div class="section-meta mono">
+          <span>[ 04 ]</span>
+          <span>// FAQ</span>
+        </div>
+        <h2 id="faq-title">Câu hỏi thường gặp</h2>
+      </header>
+
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary><span class="mono">Q01</span> Chính sách bảo hành như thế nào?</summary>
+          <p>Tất cả sản phẩm bảo hành chính hãng 24 tháng. Phụ kiện bảo hành 12 tháng. Hỗ trợ 1 đổi 1 trong 30 ngày đầu nếu lỗi nhà sản xuất.</p>
+        </details>
+        <details class="faq-item reveal" style="--delay: 0.05s">
+          <summary><span class="mono">Q02</span> Tôi có thể đổi trả không?</summary>
+          <p>Đổi trả miễn phí trong 30 ngày kể từ khi nhận hàng nếu sản phẩm lỗi hoặc không đúng mô tả. Sản phẩm phải còn nguyên seal, đầy đủ phụ kiện.</p>
+        </details>
+        <details class="faq-item reveal" style="--delay: 0.10s">
+          <summary><span class="mono">Q03</span> Có hỗ trợ trả góp không?</summary>
+          <p>Có. Trả góp 0% qua thẻ tín dụng (kỳ hạn 3, 6, 9, 12 tháng). Áp dụng cho đơn từ 3 triệu đồng.</p>
+        </details>
+        <details class="faq-item reveal" style="--delay: 0.15s">
+          <summary><span class="mono">Q04</span> Phí vận chuyển bao nhiêu?</summary>
+          <p>Miễn phí ship toàn quốc cho đơn từ 500.000đ. Đơn dưới 500.000đ phí 30.000đ. Nội thành TP.HCM &amp; Hà Nội giao trong 2 giờ.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       NEWSLETTER
+       ============================================================== -->
+  <section class="section newsletter-section" aria-labelledby="news-title">
+    <div class="container newsletter-box reveal">
+      <div class="newsletter-content">
+        <div class="section-meta mono">
+          <span>[ 05 ]</span>
+          <span>// NEWSLETTER</span>
+        </div>
+        <h2 id="news-title">Đăng ký nhận <span class="gradient-text">ưu đãi</span></h2>
+        <p>Thông báo sản phẩm mới, mã giảm giá độc quyền và flash sale.</p>
+      </div>
+
+      <form class="newsletter-form" action="#" method="post" novalidate>
+        <div class="field">
+          <input id="email" type="email" name="email" placeholder=" " required>
+          <label for="email">EMAIL CỦA BẠN</label>
+          <span class="field-error mono">// INVALID EMAIL</span>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <span>ĐĂNG KÝ</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="#top" class="brand">
+        <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true">
+          <rect width="64" height="64" rx="12" fill="#05060a"/>
+          <rect x="1" y="1" width="62" height="62" rx="11" fill="none" stroke="#00e5ff" stroke-width="1.5"/>
+          <path d="M20 24h24l-2.5 18h-19L20 24zm4 0V20a8 8 0 0116 0v4" stroke="#00e5ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="32" cy="34" r="3" fill="#ff006e"/>
+        </svg>
+        <span class="brand-text">
+          <strong>TECHVIBE</strong>
+          <span>// STORE</span>
+        </span>
+      </a>
+      <p class="footer-desc">Cửa hàng công nghệ chính hãng — laptop, điện thoại, tai nghe, đồng hồ thông minh.</p>
+      <p class="mono footer-status"><span class="pulse-dot"></span>SYSTEM OPERATIONAL</p>
+    </div>
+
+    <div>
+      <h3 class="mono">// SẢN PHẨM</h3>
+      <ul>
+        <li><a href="#products">Laptop</a></li>
+        <li><a href="#products">Điện thoại</a></li>
+        <li><a href="#products">Tai nghe</a></li>
+        <li><a href="#products">Đồng hồ</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="mono">// HỖ TRỢ</h3>
+      <ul>
+        <li><a href="#faq">Bảo hành</a></li>
+        <li><a href="#faq">Đổi trả</a></li>
+        <li><a href="#faq">Trả góp</a></li>
+        <li><a href="#faq">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <address>
+      <h3 class="mono">// LIÊN HỆ</h3>
+      <p>📧 <a href="mailto:hello@techvibestore.vn">hello@techvibestore.vn</a></p>
+      <p>📞 <a href="tel:+8419001234">1900 1234</a></p>
+      <p>📍 123 Nguyễn Huệ, Q.1, TP.HCM</p>
+    </address>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="mono">// CRAFTED BY <strong>TRẦN GIA THỊNH · 125000948</strong> — © 2026 TECHVIBE STORE</p>
+  </div>
+</footer>
+
+<!-- ================================================================
+     CART DRAWER
+     ================================================================ -->
+<div class="cart-drawer" aria-label="Giỏ hàng">
+  <header class="cart-header">
+    <div>
+      <p class="mono cart-tag">// CART</p>
+      <h2>Giỏ hàng</h2>
+    </div>
+    <label for="cart-toggle" class="cart-close" aria-label="Đóng">✕</label>
+  </header>
+
+  <div class="cart-empty">
+    <p class="mono" style="color:var(--neon-cyan)">// NO ITEMS</p>
+    <p style="font-size:2.5rem;margin:0.5rem 0">🛒</p>
+    <p>Giỏ hàng trống</p>
+    <label for="cart-toggle" class="btn btn-primary" style="margin-top:1rem">
+      <span>TIẾP TỤC MUA SẮM</span>
+    </label>
+  </div>
+
+  <div class="cart-items">
+    <div class="cart-item" data-item="iphone">
+      <img src="https://images.unsplash.com/photo-1696446701796-da61225697cc?q=80&w=150&auto=format&fit=crop" alt="" class="ci-img">
+      <div class="ci-info">
+        <p class="mono">// PHONE</p>
+        <strong>iPhone 16 Pro Max</strong>
+        <em>29.990.000đ</em>
+      </div>
+      <label for="cart-iphone" class="ci-remove" aria-label="Xóa">✕</label>
+    </div>
+    <div class="cart-item" data-item="airpods">
+      <img src="https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=150&auto=format&fit=crop" alt="" class="ci-img">
+      <div class="ci-info">
+        <p class="mono">// AUDIO</p>
+        <strong>AirPods Max</strong>
+        <em>5.490.000đ</em>
+      </div>
+      <label for="cart-airpods" class="ci-remove" aria-label="Xóa">✕</label>
+    </div>
+    <div class="cart-item" data-item="watch">
+      <img src="https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?q=80&w=150&auto=format&fit=crop" alt="" class="ci-img">
+      <div class="ci-info">
+        <p class="mono">// WATCH</p>
+        <strong>Apple Watch Ultra 2</strong>
+        <em>18.990.000đ</em>
+      </div>
+      <label for="cart-watch" class="ci-remove" aria-label="Xóa">✕</label>
+    </div>
+  </div>
+
+  <footer class="cart-footer">
+    <p class="mono cart-total-label">// TẠM TÍNH</p>
+    <div class="cart-total">
+      <strong class="cart-total-value">-- đ</strong>
+    </div>
+    <a href="#" class="btn btn-primary btn-block">
+      <span>THANH TOÁN</span>
+      <span class="btn-arrow">→</span>
+    </a>
+  </footer>
+</div>
+<label for="cart-toggle" class="cart-overlay" aria-hidden="true"></label>
+
+<!-- ================================================================
+     QUICK VIEW MODALS
+     ================================================================ -->
+<div class="qview" data-qview="laptop">
+  <label for="qview-laptop" class="qview-overlay"></label>
+  <div class="qview-content">
+    <label for="qview-laptop" class="qview-close">ESC ✕</label>
+    <div class="qview-media">
+      <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop" alt="Laptop Pro" class="qview-img">
+      <div class="card-corners"><span></span><span></span><span></span><span></span></div>
+    </div>
+    <p class="mono qview-cat">// LAPTOP · BẢO HÀNH 24 THÁNG</p>
+    <h2>Laptop Pro X1</h2>
+    <p class="qview-desc">Laptop cao cấp chip xử lý mới nhất, màn hình 14" OLED 120Hz, RAM 16GB, SSD 512GB. Mỏng nhẹ 1.2kg, pin 12 giờ.</p>
+    <div class="qview-price">
+      <strong>32.990.000<sup>đ</sup></strong>
+      <span class="price-old">38.990.000đ</span>
+      <span class="badge badge-hot">-15%</span>
+    </div>
+    <ul class="qview-features">
+      <li>✓ Màn hình 14" OLED 120Hz</li>
+      <li>✓ RAM 16GB · SSD 512GB</li>
+      <li>✓ Pin 12 giờ · Sạc nhanh 65W</li>
+    </ul>
+    <button type="button" class="btn btn-primary btn-block">
+      <span>+ THÊM VÀO GIỎ</span>
+    </button>
+  </div>
+</div>
+
+<div class="qview" data-qview="macbook">
+  <label for="qview-macbook" class="qview-overlay"></label>
+  <div class="qview-content">
+    <label for="qview-macbook" class="qview-close">ESC ✕</label>
+    <div class="qview-media">
+      <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=600&auto=format&fit=crop" alt="MacBook" class="qview-img">
+    </div>
+    <p class="mono qview-cat">// LAPTOP · BẢO HÀNH 24 THÁNG</p>
+    <h2>MacBook Air M3</h2>
+    <p class="qview-desc">MacBook Air chip M3 mạnh mẽ, màn hình Liquid Retina 13.6", RAM 8GB, SSD 256GB. Mỏng nhẹ 1.24kg, pin 18 giờ.</p>
+    <div class="qview-price">
+      <strong>24.990.000<sup>đ</sup></strong>
+      <span class="price-old">27.990.000đ</span>
+      <span class="badge badge-new">NEW</span>
+    </div>
+    <ul class="qview-features">
+      <li>✓ Chip Apple M3</li>
+      <li>✓ Màn hình 13.6" Liquid Retina</li>
+      <li>✓ Pin 18 giờ</li>
+    </ul>
+    <button type="button" class="btn btn-primary btn-block">
+      <span>+ THÊM VÀO GIỎ</span>
+    </button>
+  </div>
+</div>
+
+<div class="qview" data-qview="samsung">
+  <label for="qview-samsung" class="qview-overlay"></label>
+  <div class="qview-content">
+    <label for="qview-samsung" class="qview-close">ESC ✕</label>
+    <div class="qview-media">
+      <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=600&auto=format&fit=crop" alt="Samsung" class="qview-img">
+    </div>
+    <p class="mono qview-cat">// PHONE · BẢO HÀNH 24 THÁNG</p>
+    <h2>Samsung Galaxy S24 Ultra</h2>
+    <p class="qview-desc">Flagship Samsung bút S Pen, camera 200MP, màn hình 6.8" Dynamic AMOLED. Snapdragon 8 Gen 3, pin 5000mAh.</p>
+    <div class="qview-price">
+      <strong>22.990.000<sup>đ</sup></strong>
+      <span class="price-old">27.990.000đ</span>
+      <span class="badge badge-hot">-18%</span>
+    </div>
+    <ul class="qview-features">
+      <li>✓ Camera 200MP · Zoom 100x</li>
+      <li>✓ Màn hình 6.8" AMOLED</li>
+      <li>✓ Bút S Pen · Pin 5000mAh</li>
+    </ul>
+    <button type="button" class="btn btn-primary btn-block">
+      <span>+ THÊM VÀO GIỎ</span>
+    </button>
+  </div>
+</div>
+
+<a href="#top" class="back-to-top" aria-label="Về đầu trang">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</a>
+
+</body>
+</html>
